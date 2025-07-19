@@ -1,5 +1,4 @@
 FROM silkeh/clang:19 AS build
-# RUN apk add --no-cache clang make
 WORKDIR /weather-station/
 COPY . .
 RUN make release

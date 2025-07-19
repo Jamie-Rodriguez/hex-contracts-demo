@@ -43,6 +43,10 @@ graph LR
     WeatherReporter --> WeatherReporterForOurService
 ```
 
+I offer a hand-drawn diagram as the Mermaid rendering engine currently isn't rendering a sensible diagram:
+
+![Hand-drawn architecture diagram](./artisanal-architecture-diagram.avif)
+
 Now that we've *proven* that both implementations obey the same contract. We can then use the in-memory implementations in unit-testing!
 
 Ports and Adapters (Hexagonal) Architecture

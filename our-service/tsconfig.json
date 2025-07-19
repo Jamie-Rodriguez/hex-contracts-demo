@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "noEmit": true,
+        "target": "es2024",
+        "module": "nodenext",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    },
+    "include": ["src/**/*.js", "tests/**/*.js", "index.js"],
+    "exclude": ["node_modules", "dist"]
+}

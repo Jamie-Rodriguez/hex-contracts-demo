@@ -1,0 +1,28 @@
+version: '3.8'
+
+networks:
+  architecture-example-network:
+    driver: bridge
+
+services:
+  weather-station:
+    build:
+      context: ../weather-station
+      dockerfile: ../containerization/weather-station.dockerfile
+    container_name: weather-station
+    restart: unless-stopped
+    ports:
+      - "80:8080"
+    networks:
+      - architecture-example-network
+
+  weather-report:
+    build:
+      context: ../weather-report
+      dockerfile: ../containerization/weather-report.dockerfile
+    container_name: weather-report
+    restart: unless-stopped
+    ports:
+      - "82:8080"
+    networks:
+      - architecture-example-network

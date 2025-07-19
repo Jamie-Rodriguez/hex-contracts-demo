@@ -1,0 +1,30 @@
+{
+    "name": "our-service",
+    "author": "Jamie Rodríguez",
+    "description": "Example microservice demonstrating hexagonal architecture and contract testing",
+    "version": "1.0.0",
+    "license": "BSD-3-Clause",
+    "homepage": "https://github.com/Jamie-Rodriguez/hex-contracts-demo",
+    "repository": "github:Jamie-Rodriguez/hex-contracts-demo",
+    "keywords": [
+        "architecture",
+        "hexagonal-architecture",
+        "contract-testing",
+        "microservices"
+    ],
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "start-services": "cd .. && ./start-up.sh",
+        "stop-services": "docker-compose --file ../containerization/docker-compose.yaml down",
+        "type-check": "tsc",
+        "type-check:watch": "tsc --watch",
+        "test:unit": "vitest run tests/unit/ --reporter=verbose",
+        "test:contract": "npm run start-services && REMOTE_WEATHER_STATION_URL=http://localhost:80 REMOTE_WEATHER_REPORTER_URL=http://localhost:82 vitest run tests/contract/ --reporter=verbose; npm run stop-services"
+    },
+    "devDependencies": {
+        "prettier": "3.6.2",
+        "typescript": "^5.8.3",
+        "vitest": "^3.2.4"
+    }
+}

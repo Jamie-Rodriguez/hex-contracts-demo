@@ -1,0 +1,25 @@
+BasedOnStyle: LLVM
+IndentWidth: 8
+ColumnLimit: 80
+MaxEmptyLinesToKeep: 2
+# Commented-out lines are for Clang 14
+AlignArrayOfStructures: Right
+AlignEscapedNewlines: Left
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: Always
+AllowShortIfStatementsOnASingleLine: WithoutElse
+BinPackArguments: false
+BinPackParameters: false
+BitFieldColonSpacing: Both
+BreakStringLiterals: false
+Cpp11BracedListStyle: false
+IndentCaseLabels: true
+JavaScriptQuotes: Single
+KeepEmptyLinesAtTheStartOfBlocks: false
+PointerAlignment: Left
+# QualifierAlignment: Left
+ReflowComments: false
+# RemoveBracesLLVM: true
+SpaceAfterCStyleCast: true
+SpaceBeforeCpp11BracedList: true

@@ -1,0 +1,9 @@
+{
+    "experimentalOperatorPosition": "start",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "objectWrap": "collapse",
+    "trailingComma": "none",
+    "arrowParens": "avoid"
+}

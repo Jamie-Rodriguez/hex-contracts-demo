@@ -1,12 +1,12 @@
 #include "http-parsing.h"
-#include <netinet/in.h> // INADDR_ANY, sockaddr_in
-#include <stdio.h>      // perror(), printf()
-#include <stdlib.h>     // exit(), EXIT_FAILURE
-#include <string.h>     // memset(), strnlen()
-#include <sys/param.h>  // MIN
-#include <sys/socket.h> // socket(), AF_INET, SOCK_STREAM, socklen_t, sockaddr
-#include <time.h>       // time()
-#include <unistd.h>     // read(), write(), close()
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/param.h>
+#include <sys/socket.h>
+#include <time.h>
+#include <unistd.h>
 
 
 #define PORT 8080
@@ -46,7 +46,6 @@ int main(const int argc, char const* argv[]) {
                 exit(EXIT_FAILURE);
         }
 
-
         while (1) {
                 printf(
                     "\n++++++++++ Waiting for new connection ++++++++++++\n\n");
@@ -76,17 +75,22 @@ int main(const int argc, char const* argv[]) {
                 printf("Incoming request: \n\n");
                 printf("%s\n", request_buffer);
 
+                const enum httpVerb verb =
+                    getHttpVerbFromRequest(request_buffer);
                 const char* path = getHttpUriFromRequest(request_buffer);
+                const size_t pathLen =
+                    (size_t) strchr(path, ' ') - (size_t) path;
 
                 unsigned int statusCode = 0;
                 enum mimeType mime = 0;
 
-                // Kubernetes readiness probe endpoint
-                if (BEGINS_WITH(path, "/readyz")) {
+                // Kubernetes readiness probe & healthcheck endpoints
+                if (verb == GET && (MATCHES(path, pathLen, "/readyz") ||
+                                    MATCHES(path, pathLen, "/healthz"))) {
                         statusCode = 200;
                         mime = JSON;
                         strcpy(response_body, "{\"success\":\"true\"}");
-                } else if (BEGINS_WITH(path, "/weather")) {
+                } else if (verb == GET && MATCHES(path, pathLen, "/weather")) {
                         const int tempMin = -20;
                         const int tempMax = 50;
 
@@ -113,7 +117,6 @@ int main(const int argc, char const* argv[]) {
                                             .time = time(0),
                                             .mime = mime };
 
-                // char output_buffer[500] = { 0 };
                 createResponse(response, output_buffer, sizeof(output_buffer));
 
                 printf("Response: \n\n");

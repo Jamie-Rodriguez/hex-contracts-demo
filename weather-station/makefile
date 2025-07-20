@@ -101,6 +101,7 @@ check-cppcheck:
 		--showtime=summary \
 		-j 4               \
 		-I include/        \
+		-i lib/            \
 		--enable=all       \
 		--suppress=missingIncludeSystem
 
@@ -122,7 +123,7 @@ check-infer:
 		--write-html                  \
 		--issues-tests issues.txt     \
 		--cost-issues-tests costs.txt \
-		-- make
+		-- make $(TARGET)
 	$(MAKE) clean
 
 # Note: Z3 solver is required for crosscheck-with-z3

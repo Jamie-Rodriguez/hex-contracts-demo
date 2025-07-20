@@ -7,10 +7,11 @@
 
 #define MAX_REQUEST_LEN 0x400
 
-
 // Only works with string literals
-#define BEGINS_WITH(req, prefix) \
-        ((req) != NULL && strncmp((req), (prefix), sizeof(prefix) - 1) == 0)
+#define MATCHES(runtime_str, len, static_str)                   \
+        ((runtime_str) != NULL &&                               \
+         strnlen(runtime_str, len) == sizeof(static_str) - 1 && \
+         strncmp((runtime_str), (static_str), sizeof(static_str) - 1) == 0)
 
 
 enum httpVerb { UNKNOWN = 0, GET = 1, POST = 2 };

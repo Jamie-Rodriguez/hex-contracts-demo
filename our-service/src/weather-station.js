@@ -36,7 +36,7 @@ export const useInMemoryWeatherStation = () => {
 }
 
 /**
- * @param {Option<WeatherStationData>} predefinedWeatherData - The data to return from `getWeatherData()`
+ * @param {Option<WeatherStationData>} predefinedWeatherData
  * @returns {WeatherStation}
  */
 export const useDeterministicWeatherStation = predefinedWeatherData => {

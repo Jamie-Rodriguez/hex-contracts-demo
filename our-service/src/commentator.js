@@ -1,5 +1,4 @@
 /**
- * @typedef {import('../utils.js').Process} Process
  * @typedef {import('./weather-station.js').WeatherStationData} WeatherStationData
  * @typedef {import('./weather-station.js').WeatherStation} WeatherStation
  * @typedef {import('./weather-reporter.js').WeatherReporter} WeatherReporter
@@ -8,11 +7,6 @@
 /**
  * @template T
  * @typedef {import('./error-types.js').Option<T>} Option
- */
-
-/**
- * @typedef {Object} Commentator
- * @property {(weatherStationData: WeatherStationData) => Promise<Option<string>>} commentOnWeather
  */
 
 /**

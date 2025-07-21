@@ -17,10 +17,10 @@
     "scripts": {
         "start-services": "cd .. && ./start-up.sh",
         "stop-services": "docker-compose --file ../containerization/docker-compose.yaml down",
-        "type-check": "tsc",
-        "type-check:watch": "tsc --watch",
         "test:unit": "vitest run tests/unit/ --reporter=verbose",
-        "test:contract": "npm run start-services && REMOTE_WEATHER_STATION_URL=http://localhost:80 REMOTE_WEATHER_REPORTER_URL=http://localhost:82 vitest run tests/contract/ --reporter=verbose; npm run stop-services"
+        "test:contract": "npm run start-services && REMOTE_WEATHER_STATION_URL=http://localhost:80 REMOTE_WEATHER_REPORTER_URL=http://localhost:82 vitest run tests/contract/ --reporter=verbose; npm run stop-services",
+        "type-check": "tsc",
+        "type-check:watch": "tsc --watch"
     },
     "devDependencies": {
         "prettier": "3.6.2",

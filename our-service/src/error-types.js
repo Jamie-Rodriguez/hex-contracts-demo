@@ -1,24 +1,4 @@
 /**
- * @template T
- * @typedef {Object} Ok
- * @property {true} ok
- * @property {T} value
- */
-
-/**
- * @template E
- * @typedef {Object} Err
- * @property {false} ok
- * @property {E} error
- */
-
-/**
- * @template T
- * @template E
- * @typedef {Ok<T> | Err<E>} Result
- */
-
-/**
  * @typedef {Object} None
  * @property {'none'} type
  */

@@ -16,10 +16,6 @@ import {
  */
 
 /**
- * @typedef {import('../../src/error-types.js').None} None
- */
-
-/**
  * @typedef {import('../../utils.js').Process} Process
  * @typedef {import('../../src/weather-reporter.js').WeatherReporter} WeatherReporter
  */

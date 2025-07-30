@@ -6,27 +6,29 @@ CC ?= clang
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Darwin)
-    # Platform-specific linker flags for dead code elimination
-    GC_SECTIONS_FLAG := -Wl,-dead_strip
+	# Platform-specific linker flags for dead code elimination
+	GC_SECTIONS_FLAG := -Wl,-dead_strip
 	# Use sed with -i '' for in-place editing on macOS
 	SED_INPLACE := sed -i ''
+	STATIC_FLAG :=
 else
-    GC_SECTIONS_FLAG := -Wl,--gc-sections
+	GC_SECTIONS_FLAG := -Wl,--gc-sections
 	SED_INPLACE := sed -i
+	STATIC_FLAG := -static
 endif
 
 # Architecture configuration
 ARCH ?= native
 
 ifeq ($(BUILD),release)
-    CFLAGS_BUILD := -O3 -DNDEBUG
-    LDFLAGS_BUILD :=  -static $(GC_SECTIONS_FLAG)
-    BUILD_SUFFIX := 
+	CFLAGS_BUILD := -O3 -DNDEBUG
+	LDFLAGS_BUILD := $(STATIC_FLAG) $(GC_SECTIONS_FLAG)
+	BUILD_SUFFIX :=
 else
-    SANITIZER_FLAGS := -fsanitize=undefined -fsanitize=address -fno-omit-frame-pointer
-    CFLAGS_BUILD := -O1 -g3 $(SANITIZER_FLAGS)
-    LDFLAGS_BUILD :=  -static $(SANITIZER_FLAGS) $(GC_SECTIONS_FLAG)
-    BUILD_SUFFIX := -debug
+	SANITIZER_FLAGS := -fsanitize=undefined -fsanitize=address -fno-omit-frame-pointer
+	CFLAGS_BUILD := -O1 -g3 $(SANITIZER_FLAGS)
+	LDFLAGS_BUILD := $(STATIC_FLAG) $(SANITIZER_FLAGS) $(GC_SECTIONS_FLAG)
+	BUILD_SUFFIX := -debug
 endif
 
 # -D_POSIX_C_SOURCE=200809L is for strnlen()

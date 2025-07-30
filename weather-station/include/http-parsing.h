@@ -32,7 +32,6 @@ enum httpVerb getHttpVerbFromRequest(const char* request);
 const char* getHttpUriFromRequest(const char* request);
 
 void createHttpHeaderDateString(time_t time, char* dest, size_t destLen);
-void createContentLengthLine(size_t, char* dest, size_t destLen);
 
 void createResponse(response response, char* dest, size_t destLen);
 

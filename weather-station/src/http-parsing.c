@@ -49,10 +49,6 @@ void createHttpHeaderDateString(time_t time, char* dest, size_t destLen) {
         strftime(dest, destLen, "Date: %a, %d %b %Y %H:%M:%S GMT", tm);
 }
 
-void createContentLengthLine(size_t n, char* dest, size_t destLen) {
-        snprintf(dest, destLen, "Content-Length: %zu", n);
-}
-
 void createResponse(response response, char* dest, size_t destLen) {
         const char* statusLine;
         switch (response.status) {

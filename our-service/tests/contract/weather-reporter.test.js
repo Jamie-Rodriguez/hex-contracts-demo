@@ -1,9 +1,6 @@
 import { describe, beforeAll, test, expect } from 'vitest'
-import { waitForService } from '../../utils.js'
-import {
-    useInMemoryWeatherReporter,
-    useRemoteWeatherReporter
-} from '../../src/weather-reporter.js'
+import { useInMemoryWeatherReporter } from '../../src/weather-reporter.js'
+import { useContainerizedWeatherReporter } from './container-helpers.js'
 
 /**
  * @template T
@@ -16,15 +13,8 @@ import {
  */
 
 /**
- * @typedef {import('../../utils.js').Process} Process
  * @typedef {import('../../src/weather-reporter.js').WeatherReporter} WeatherReporter
  */
-
-// This is just a workaround because TypeScript does not understand the global
-// `process` variable, nor does it inherently understand the shape of the
-// `globalThis` object...
-/** @type {Process} */
-const process = /** @type {any} */ (globalThis).process
 
 /**
  * @param {string} name
@@ -35,9 +25,7 @@ const runWeatherReporterContractTests = (name, createWeatherReporter) => {
         /** @type {WeatherReporter} */
         let weatherReporter
 
-        beforeAll(async () => {
-            weatherReporter = await createWeatherReporter()
-        })
+        beforeAll(async () => weatherReporter = await createWeatherReporter())
 
         test('should return weather report when successful', async () => {
             const temperature = 25
@@ -85,19 +73,11 @@ const runWeatherReporterContractTests = (name, createWeatherReporter) => {
 }
 
 describe('Weather Reporter Contract Tests', () => {
-    runWeatherReporterContractTests('In-Memory Weather Reporter', async () =>
-        useInMemoryWeatherReporter()
+    runWeatherReporterContractTests('In-Memory Weather Reporter',
+        async () => useInMemoryWeatherReporter()
     )
 
-    runWeatherReporterContractTests('Remote Weather Reporter', async () => {
-        const url = process.env.REMOTE_WEATHER_REPORTER_URL
-
-        if (!url)
-            throw new Error(
-                'REMOTE_WEATHER_REPORTER_URL environment variable is required'
-            )
-
-        await waitForService(`${url}/readyz`, 30000)
-        return useRemoteWeatherReporter(url)
-    })
+    runWeatherReporterContractTests('Remote Weather Reporter',
+        async () => useContainerizedWeatherReporter()
+    )
 })

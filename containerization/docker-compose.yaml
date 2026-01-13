@@ -7,8 +7,8 @@ networks:
 services:
   weather-station:
     build:
-      context: ../weather-station
-      dockerfile: ../containerization/weather-station.dockerfile
+      context: ..
+      dockerfile: containerization/weather-station.dockerfile
     container_name: weather-station
     restart: unless-stopped
     ports:
@@ -18,8 +18,8 @@ services:
 
   weather-report:
     build:
-      context: ../weather-report
-      dockerfile: ../containerization/weather-report.dockerfile
+      context: ..
+      dockerfile: containerization/weather-report.dockerfile
     container_name: weather-report
     restart: unless-stopped
     ports:

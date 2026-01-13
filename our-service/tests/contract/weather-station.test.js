@@ -1,21 +1,13 @@
-import { describe, beforeAll, test, expect } from 'vitest'
-import { waitForService } from '../../utils.js'
+import { describe, test, expect, beforeAll } from 'vitest'
 import {
     useInMemoryWeatherStation,
-    useDeterministicWeatherStation,
-    useRemoteWeatherStation
+    useDeterministicWeatherStation
 } from '../../src/weather-station.js'
+import { useContainerizedWeatherStation } from './container-helpers.js'
 
 /**
- * @typedef {import('../../utils.js').Process} Process
  * @typedef {import('../../src/weather-station.js').WeatherStation} WeatherStation
  */
-
-// This is just a workaround because TypeScript does not understand the global
-// `process` variable, nor does it inherently understand the shape of the
-// `globalThis` object...
-/** @type {Process} */
-const process = /** @type {any} */ (globalThis).process
 
 /**
  * @param {string} name
@@ -26,9 +18,7 @@ const runWeatherStationContractTests = (name, createWeatherStation) => {
         /** @type {WeatherStation} */
         let weatherStation
 
-        beforeAll(async () => {
-            weatherStation = await createWeatherStation()
-        })
+        beforeAll(async () => weatherStation = await createWeatherStation())
 
         test('should return temperature data when successful', async () => {
             const temperatureData = await weatherStation.getWeatherData()
@@ -44,27 +34,19 @@ const runWeatherStationContractTests = (name, createWeatherStation) => {
     })
 }
 
-describe('Weather Station Contract Tests', () => {
-    runWeatherStationContractTests('In-Memory Weather Station', async () =>
-        useInMemoryWeatherStation()
+describe('Weather Station Contract Tests', async () => {
+    runWeatherStationContractTests('In-Memory Weather Station',
+        async () => useInMemoryWeatherStation()
     )
 
-    runWeatherStationContractTests('Deterministic Weather Station', async () =>
-        useDeterministicWeatherStation({
+    runWeatherStationContractTests('Deterministic Weather Station',
+        async () => useDeterministicWeatherStation({
             type: 'some',
             value: { temperature: 20, units: 'celsius' }
         })
     )
 
-    runWeatherStationContractTests('Remote Weather Station', async () => {
-        const url = process.env.REMOTE_WEATHER_STATION_URL
-
-        if (!url)
-            throw new Error(
-                'REMOTE_WEATHER_STATION_URL environment variable is required'
-            )
-
-        await waitForService(`${url}/readyz`, 30000)
-        return useRemoteWeatherStation(url)
-    })
+    runWeatherStationContractTests('Remote Weather Station',
+        async () => useContainerizedWeatherStation()
+    )
 })

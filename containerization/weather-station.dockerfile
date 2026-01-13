@@ -1,6 +1,6 @@
 FROM silkeh/clang:19 AS build
 WORKDIR /weather-station/
-COPY . .
+COPY weather-station/ .
 RUN make release
 
 FROM scratch AS final

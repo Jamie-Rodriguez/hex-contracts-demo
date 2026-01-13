@@ -49,7 +49,7 @@ export const useDeterministicWeatherStation = predefinedWeatherData => {
 }
 
 /**
- * @param {string} weatherStationUrl - The *base* URL of the weather station API
+ * @param {string} weatherStationUrl The *base* URL of the weather station API
  * @returns {WeatherStation}
  */
 export const useRemoteWeatherStation = weatherStationUrl => {

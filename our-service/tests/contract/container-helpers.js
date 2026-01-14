@@ -68,7 +68,12 @@ async function getImage(configKey) {
     console.log(`Building image from: ${config.dockerfile}`)
 
     try {
-        return await GenericContainer.fromDockerfile(PROJECT_ROOT, config.dockerfile).build()
+        // Note: I've overidden the default policy to delete the image on exit.
+        // This way, builds can be cached.
+        return await GenericContainer.fromDockerfile(PROJECT_ROOT,
+                                                     config.dockerfile)
+                                     .build(config.imageName,
+                                            { deleteOnExit: false })
     } catch (error) {
         const message = error instanceof Error ? error.message : String(error)
 

@@ -3,10 +3,10 @@ RUN apk add --no-cache zig
 WORKDIR /weather-report/
 COPY weather-report/build.zig ./
 COPY weather-report/src/ ./src/
-RUN zig build --release=fast
+RUN zig build --release=fast && chmod 755 zig-out/bin/weather-report
 
 FROM scratch AS final
 COPY weather-report/template.html /template.html
-COPY --from=build --chmod=755 /weather-report/zig-out/bin/weather-report /bin/weather-report
+COPY --from=build /weather-report/zig-out/bin/weather-report /bin/weather-report
 EXPOSE 8080
 ENTRYPOINT ["/bin/weather-report"]
